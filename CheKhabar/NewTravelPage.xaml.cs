@@ -1,4 +1,6 @@
-﻿using CheKhabar.Model;
+﻿using CheKhabar.Logic;
+using CheKhabar.Model;
+using Plugin.Geolocator;
 using SQLite;
 using System;
 using System.Collections.Generic;
@@ -19,26 +21,58 @@ namespace CheKhabar
             InitializeComponent();
         }
 
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+
+            var locator = CrossGeolocator.Current;
+            var position = await locator.GetPositionAsync();
+
+            var venues = await VenueLogic.GetVenues(position.Latitude, position.Longitude);
+            venueListView.ItemsSource = venues;
+        }
+
         private void ToolbarItem_Clicked(object sender, EventArgs e)
         {
-            Post post = new Post()
+            try
             {
-                Experience = experienceEntry.Text
-            };
+                var selectedVenue = venueListView.SelectedItem as Venue;
+                var firstCategory = selectedVenue.categories.FirstOrDefault();
 
-            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
+                Post post = new Post()
+                {
+                    Experience = experienceEntry.Text,
+                    CategoryId = firstCategory.id,
+                    CategoryName = firstCategory.name,
+                    Address = selectedVenue.location.address,
+                    Distance = selectedVenue.location.distance,
+                    Latitude = selectedVenue.location.lat,
+                    Longitude = selectedVenue.location.lng,
+                    VenueName = selectedVenue.name
+                };
+
+                using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
+                {
+                    conn.CreateTable<Post>();
+                    int rows = conn.Insert(post);
+
+                    if (rows > 0)
+                    {
+                        DisplayAlert("Success", "Experience successfully inserted", "OK");
+                    }
+                    else
+                    {
+                        DisplayAlert("Failure", "Experience failed to be inserted", "OK");
+                    }
+                }
+            }
+            catch(NullReferenceException ex)
             {
-                conn.CreateTable<Post>();
-                int rows = conn.Insert(post);
 
-                if (rows > 0)
-                {
-                    DisplayAlert("Success", "Experience successfully inserted", "OK");
-                }
-                else
-                {
-                    DisplayAlert("Failure", "Experience failed to be inserted", "OK");
-                }
+            }
+            catch(Exception ex)
+            {
+
             }
         }
     }

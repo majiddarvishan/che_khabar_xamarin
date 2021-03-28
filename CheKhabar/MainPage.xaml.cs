@@ -13,6 +13,10 @@ namespace CheKhabar
         public MainPage()
         {
             InitializeComponent();
+
+            var assembly = typeof(MainPage);
+
+            iconImage.Source = ImageSource.FromResource("CheKhabar.Assets.Images.chekhabar.webp", assembly);
         }
 
         private void LoginButton_Clicked(object sender, EventArgs e)
@@ -28,6 +32,11 @@ namespace CheKhabar
             {
                 Navigation.PushAsync(new HomePage());
             }
+        }
+
+        private void registerUserButton_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new RegisterPage());
         }
     }
 }

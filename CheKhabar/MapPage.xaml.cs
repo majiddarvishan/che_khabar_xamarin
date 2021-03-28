@@ -1,6 +1,8 @@
-﻿using Plugin.Geolocator;
+﻿using CheKhabar.Model;
+using Plugin.Geolocator;
 using Plugin.Geolocator.Abstractions;
 using Plugin.Permissions;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -73,14 +75,53 @@ namespace CheKhabar
                 await locator.StartListeningAsync(TimeSpan.Zero, 100);
             }
 
-            GetLocation();    
+            GetLocation();
+
+            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
+            {
+                conn.CreateTable<Post>();
+                var posts = conn.Table<Post>().ToList();
+
+                DisplayInMap(posts);
+            }
         }
 
-        protected override void OnDisappearing()
+        private void DisplayInMap(List<Post> posts)
+        {
+            
+            foreach (var post in posts)
+            {
+                try
+                {
+                    var position = new Xamarin.Forms.Maps.Position(post.Latitude, post.Longitude);
+
+                    var pin = new Xamarin.Forms.Maps.Pin()
+                    {
+                        Type = Xamarin.Forms.Maps.PinType.SavedPin,
+                        Position = position,
+                        Label = post.VenueName,
+                        Address = post.Address
+                    };
+
+                    locationMap.Pins.Add(pin);
+                }
+                catch (NullReferenceException ex)
+                {
+
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+            
+        }
+
+        protected override async void OnDisappearing()
         {
             base.OnDisappearing();
 
-            CrossGeolocator.Current.StopListeningAsync();
+            await CrossGeolocator.Current.StopListeningAsync();
             CrossGeolocator.Current.PositionChanged -= Locator_PositionChanged;
         }
 
