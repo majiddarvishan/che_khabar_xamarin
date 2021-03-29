@@ -1,8 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="CheKhabar.MainPage">    
-    
+             x:Class="CheKhabar.OTPConfirmPage">
     <StackLayout VerticalOptions="Center"
                  Margin="20">
         <Image x:Name="iconImage"
@@ -10,14 +9,14 @@
                HeightRequest="50"
                HorizontalOptions="FillAndExpand"
                Margin="0,0,0,50"/>
-        <Entry x:Name="mobileEntry" 
-               Placeholder="Mobile number"
+        <Entry x:Name="otpEntry" 
+               Placeholder="Enter number"
                TextColor="{StaticResource blueColor}"
                Keyboard="Email"/>
-        <Button x:Name="LoginButton" 
+        <Button x:Name="enterButton"
                 Margin="0,50,0,0"
-                Text="Log in" 
-                Clicked="LoginButton_Clicked"
+                Text="Enter"
+                Clicked="enterButton_Clicked"
                 Style="{StaticResource normalButton}"/>
     </StackLayout>
 </ContentPage>

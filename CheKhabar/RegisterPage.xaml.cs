@@ -22,11 +22,11 @@ namespace CheKhabar
         {
             if(passwordEntry.Text == confirmPasswordEntry.Text)
             {
-                Users user = new Users()
-                {
-                    Email = emailEntry.Text,
-                    Password = passwordEntry.Text
-                };
+                //Users user = new Users()
+                //{
+                //    Email = emailEntry.Text,
+                //    Password = passwordEntry.Text
+                //};
             }
             else
             {

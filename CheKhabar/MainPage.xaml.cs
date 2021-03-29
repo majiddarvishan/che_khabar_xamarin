@@ -21,22 +21,34 @@ namespace CheKhabar
 
         private void LoginButton_Clicked(object sender, EventArgs e)
         {
-            bool isEmailEmpty = string.IsNullOrEmpty(emailEntry.Text);
-            bool isPasswordEmpty = string.IsNullOrEmpty(passwordEntry.Text);
+            var mobileNumber = mobileEntry.Text;
 
-            if(isEmailEmpty || isPasswordEmpty)
+            if(!IsNumberValid(mobileNumber))
             {
-
+                DisplayAlert("Error", "Please input a valid mobile number", "OK");
             }
             else
             {
-                Navigation.PushAsync(new HomePage());
+                Navigation.PushAsync(new OTPConfirmPage(mobileNumber));
             }
         }
 
-        private void registerUserButton_Clicked(object sender, EventArgs e)
+        public static bool IsNumberValid(string strNumber)
         {
-            Navigation.PushAsync(new RegisterPage());
+            if (string.IsNullOrEmpty(strNumber))
+            {
+                return false;
+            }
+            else if (!strNumber.StartsWith("09") || strNumber.Length != 11)
+            {
+                return false;
+            }
+            else if(!strNumber.All(char.IsDigit))
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

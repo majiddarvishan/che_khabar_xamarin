@@ -1,4 +1,5 @@
-﻿using CheKhabar.Model;
+﻿using CheKhabar.Logic;
+using CheKhabar.Model;
 using Plugin.Geolocator;
 using Plugin.Geolocator.Abstractions;
 using Plugin.Permissions;
@@ -18,6 +19,8 @@ namespace CheKhabar
     public partial class MapPage : ContentPage
     {
         private bool hasLocationPermission = false;
+
+        Position currentPosition = null;
         public MapPage()
         {
             InitializeComponent();
@@ -77,30 +80,25 @@ namespace CheKhabar
 
             GetLocation();
 
-            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
-            {
-                conn.CreateTable<Post>();
-                var posts = conn.Table<Post>().ToList();
-
-                DisplayInMap(posts);
-            }
+            var advertisements = await AdvertisementLogic.GetAdvertisements(currentPosition.Latitude, currentPosition.Longitude);
+            DisplayInMap(advertisements);
         }
 
-        private void DisplayInMap(List<Post> posts)
+        private void DisplayInMap(List<Advertisement> advertisements)
         {
             
-            foreach (var post in posts)
+            foreach (var adv in advertisements)
             {
                 try
                 {
-                    var position = new Xamarin.Forms.Maps.Position(post.Latitude, post.Longitude);
+                    var position = new Xamarin.Forms.Maps.Position(adv.latitude, adv.longitude);
 
                     var pin = new Xamarin.Forms.Maps.Pin()
                     {
                         Type = Xamarin.Forms.Maps.PinType.SavedPin,
                         Position = position,
-                        Label = post.VenueName,
-                        Address = post.Address
+                        Label = adv.description,
+                        Address = adv.distance.ToString()
                     };
 
                     locationMap.Pins.Add(pin);
@@ -136,6 +134,8 @@ namespace CheKhabar
             {
                 var locator = CrossGeolocator.Current;
                 var position = await locator.GetPositionAsync();
+
+                currentPosition = position;
 
                 MoveMap(position); 
             }

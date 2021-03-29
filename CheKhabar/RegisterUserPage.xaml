@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CheKhabar.RegisterUserPage">
+    <StackLayout VerticalOptions="Center">
+
+        <Entry x:Name="firstNameEntry" 
+               Placeholder="First Name"
+               TextColor="{StaticResource blueColor}"/>
+        <Entry x:Name="lastNameEntry" 
+               Placeholder="Last Name"
+               TextColor="{StaticResource blueColor}"/>
+        <!--<Entry x:Name="nickNameEntry" 
+               Placeholder="Nick Name"
+               TextColor="{StaticResource blueColor}"/>-->
+        <Entry x:Name="emailEntry" 
+               Placeholder="Email address"
+               TextColor="{StaticResource blueColor}"
+               Keyboard="Email"/>
+        <Entry x:Name="mobileEntry" 
+               Placeholder="Mobile Number"
+               TextColor="{StaticResource blueColor}" 
+               IsEnabled="False" 
+               IsReadOnly="True"/>
+
+        <!--<Switch x:Name="userModeSwitch"
+                 IsToggled="False">
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="On">
+                        <VisualState.Setters>
+                            <Setter Property="ThumbColor"
+                            Value="MediumSpringGreen" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Off">
+                        <VisualState.Setters>
+                            <Setter Property="ThumbColor"
+                            Value="Red" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+        </Switch>
+        <Label Text="Common User">
+            <Label.Triggers>
+                <DataTrigger TargetType="Label"
+                     Binding="{Binding Source={x:Reference userModeSwitch}, Path=IsToggled}"
+                     Value="true">
+                    <Setter Property="Text"
+                    Value="Advertiser User" />
+                </DataTrigger>
+            </Label.Triggers>
+        </Label>-->
+
+        <Button x:Name="registerButton" 
+                Margin="0,50,0,0"
+                Text="Register" 
+                Clicked="registerButton_Clicked"
+                Style="{StaticResource normalButton}"/>
+    </StackLayout>
+</ContentPage>
