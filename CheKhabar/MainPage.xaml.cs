@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CheKhabar.Views.TestForms;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -21,16 +22,18 @@ namespace CheKhabar
 
         private void LoginButton_Clicked(object sender, EventArgs e)
         {
-            var mobileNumber = mobileEntry.Text;
+            Navigation.PushAsync(new SignUpPage());
 
-            if(!IsNumberValid(mobileNumber))
-            {
-                DisplayAlert("Error", "Please input a valid mobile number", "OK");
-            }
-            else
-            {
-                Navigation.PushAsync(new OTPConfirmPage(mobileNumber));
-            }
+            //var mobileNumber = mobileEntry.Text;
+
+            //if(!IsNumberValid(mobileNumber))
+            //{
+            //    DisplayAlert("Error", "Please input a valid mobile number", "OK");
+            //}
+            //else
+            //{
+            //    Navigation.PushAsync(new OTPConfirmPage(mobileNumber));
+            //}
         }
 
         public static bool IsNumberValid(string strNumber)
