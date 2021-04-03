@@ -30,5 +30,24 @@ namespace CheKhabar.Logic
 
             return advertisements;
         }
+
+        public async static Task<List<Advertisement>> GetAdvertisements(string mobile)
+        {
+            List<Advertisement> advertisements = new List<Advertisement>();
+
+            var url = AdvertisementRoot.GenerateUserURL(mobile);
+
+            using (HttpClient client = new HttpClient())
+            {
+                var response = await client.GetAsync(url);
+                var json = await response.Content.ReadAsStringAsync();
+
+                var advList = JsonConvert.DeserializeObject<Advertisement[]>(json);
+
+                advertisements = advList.ToList<Advertisement>();
+            }
+
+            return advertisements;
+        }
     }
 }

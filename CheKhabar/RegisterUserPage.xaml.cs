@@ -1,6 +1,7 @@
 ﻿using CheKhabar.Helpers;
 using CheKhabar.Model;
 using Newtonsoft.Json;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,12 +58,33 @@ namespace CheKhabar
                 var response = await client.PostAsync(url, stringContent);
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
+                    App.LoginUserNumber = MobileNumber;
+
+                    SaveToDatabase(user);
                     _ = Navigation.PushAsync(new HomePage());
                 }
                 else
                 {
                     _ = DisplayAlert("Error", "Problem in connecting with server, please try later", "OK");
                 }
+            }
+        }
+
+        private void SaveToDatabase(Users usr)
+        {
+            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
+            {
+                conn.CreateTable<Users>();
+                int rows = conn.Insert(usr);
+
+                //if (rows > 0)
+                //{
+                //    DisplayAlert("Success", "Advertisement successfully inserted", "OK");
+                //}
+                //else
+                //{
+                //    DisplayAlert("Failure", "Advertisement failed to be inserted", "OK");
+                //}
             }
         }
     }

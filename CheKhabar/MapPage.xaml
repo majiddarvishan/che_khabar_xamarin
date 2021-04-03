@@ -6,5 +6,6 @@
     <maps:Map x:Name="locationMap"
               HorizontalOptions="FillAndExpand"
               VerticalOptions="FillAndExpand"
-              MapType="Street"/>
+              MapType="Street"
+              MapClicked="OnMapClicked"/>
 </ContentPage>

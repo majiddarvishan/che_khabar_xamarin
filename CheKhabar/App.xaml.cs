@@ -7,6 +7,7 @@ namespace CheKhabar
     public partial class App : Application
     {
         public static string DatabaseLocation = string.Empty;
+        public static string LoginUserNumber = string.Empty;
         public App()
         {
             InitializeComponent();

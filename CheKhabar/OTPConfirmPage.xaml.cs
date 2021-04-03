@@ -30,6 +30,7 @@ namespace CheKhabar
                 var response = await client.SendAsync(new HttpRequestMessage(HttpMethod.Head, url));
                 if(response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
+                    App.LoginUserNumber = MobileNumber;
                     _ = Navigation.PushAsync(new HomePage());
                 }
                 else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)

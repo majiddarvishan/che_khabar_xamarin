@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CheKhabar.AddAdvertisementPage">
+    <StackLayout>
+        <Entry x:Name="descriptionEntry"
+               Placeholder="Description"
+               TextColor="{StaticResource blueColor}"/>
+        <Entry x:Name="startTimeEntry" 
+               Placeholder="Start Time"
+               TextColor="{StaticResource blueColor}"/>
+        <Entry x:Name="stopTimeEntry" 
+               Placeholder="Stop Time"
+               TextColor="{StaticResource blueColor}"/>
+
+        <StackLayout Orientation="Horizontal"  
+                     HorizontalOptions="FillAndExpand"
+                     Margin="30,0,0,0">
+            <Button x:Name="addAdvertisementButton" 
+                Margin="0,10,0,0"
+                Text="Save" 
+                Clicked="addAdvertisementButton_Clicked"
+                Style="{StaticResource normalButton}"/>
+
+            <Button x:Name="cancelAdvertisementButton" 
+                Margin="0,10,0,0"
+                Text="Cancel" 
+                Clicked="cancelAdvertisementButton_Clicked"
+                Style="{StaticResource normalButton}"/>
+        </StackLayout>
+        
+    </StackLayout>
+</ContentPage>

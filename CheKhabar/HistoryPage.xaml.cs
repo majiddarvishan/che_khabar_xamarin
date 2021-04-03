@@ -1,4 +1,5 @@
-﻿using CheKhabar.Model;
+﻿using CheKhabar.Logic;
+using CheKhabar.Model;
 using SQLite;
 using System;
 using System.Collections.Generic;
@@ -19,25 +20,33 @@ namespace CheKhabar
             InitializeComponent();
         }
 
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
 
             using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
             {
-                conn.CreateTable<Post>();
-                var posts = conn.Table<Post>().ToList();
-                postListView.ItemsSource = posts;
+                conn.CreateTable<Advertisement>();
+                var advertisements = conn.Table<Advertisement>().ToList();
+                if (advertisements.Count > 0)
+                {
+                    postListView.ItemsSource = advertisements;
+                }
+                else
+                {
+                    advertisements = await AdvertisementLogic.GetAdvertisements(App.LoginUserNumber);
+                    postListView.ItemsSource = advertisements;
+                }
             }
         }
 
         private void postListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            var selectedPost = postListView.SelectedItem as Post;
+            var selectedAdv = postListView.SelectedItem as Advertisement;
 
-            if(selectedPost != null)
+            if(selectedAdv != null)
             {
-                Navigation.PushAsync(new PostDetailPage(selectedPost));
+                Navigation.PushAsync(new PostDetailPage(selectedAdv));
             }
         }
     }

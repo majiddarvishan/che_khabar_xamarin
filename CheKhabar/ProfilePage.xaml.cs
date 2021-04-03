@@ -1,4 +1,5 @@
-﻿using CheKhabar.Model;
+﻿using CheKhabar.Logic;
+using CheKhabar.Model;
 using SQLite;
 using System;
 using System.Collections.Generic;
@@ -19,35 +20,34 @@ namespace CheKhabar
             InitializeComponent();
         }
 
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
 
-            using(SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
+            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
             {
-                var postTable = conn.Table<Post>().ToList();
+                conn.CreateTable<Users>();
+                var user = conn.Table<Users>().Where(usr => usr.mobile == App.LoginUserNumber);
 
-                //var categories = (from p in postTable
-                //                  orderby p.CategoryId
-                //                  select p.CategoryName).Distinct().ToList();
-
-                var categories2 = postTable.OrderBy(p=> p.CategoryId).Select(p => p.CategoryName).Distinct().ToList();
-
-                Dictionary<string, int> categoriesCount = new Dictionary<string, int>();
-                foreach(var category in categories2)
+                if (user.ToList().Count > 0)
                 {
-                    //var count = (from post in postTable
-                    //             where post.CategoryName == category
-                    //             select post).ToList().Count;
-
-                    var count2 = postTable.Where(p => p.CategoryName == category).ToList().Count;
-                    categoriesCount.Add(category, count2);
+                    DisplayUser(user.First());
                 }
-
-                categoriesListView.ItemsSource = categoriesCount;
-
-                postCountLabel.Text = postTable.Count.ToString();
+                else
+                {
+                    var userProfile = await UserLogic.GetUserProfile(App.LoginUserNumber);
+                    DisplayUser(userProfile);
+                }
             }
+        }
+
+        private void DisplayUser(Users user)
+        {
+            firstNameEntry.Text = user.first_name;
+            lastNameEntry.Text = user.last_name;
+            emailEntry.Text = user.email;
+            mobileEntry.Text = user.mobile;
+            distanceEntry.Text = user.distance.ToString();
         }
     }
 }

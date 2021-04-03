@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CheKhabar.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -38,5 +39,13 @@ namespace CheKhabar.Model
         public UserMode user_mode { get; set; }
 
         public string bio { get; set; }
+    }
+
+    public class UserRoot
+    {
+        public static string GenerateUserProfileURL(string mobile)
+        {
+            return string.Format(Constants.USER_PROFILE, mobile);
+        }
     }
 }

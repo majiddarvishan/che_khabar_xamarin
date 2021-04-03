@@ -10,9 +10,14 @@ namespace CheKhabar.Helpers
         public const string CLIENT_ID = "NK2FI4P5YIEEXAPXSLATSSO03IU40VQVJ0EEWS15JPTPLSKH";
         public const string CLIENT_SECRET = "OQXXY1T2PRDNRBX3B3DP0CR2TPU2HJ5QTO3SX5CT2AOW1IU0";
 
-        public const string ADVERTISEMENT_SEARCH = "http://192.168.1.172:5000/advertisements?&lat={0}&lng={1}&distance={2}";
+        public const string BASE_URL = "http://192.168.1.172:5000";
 
-        public const string ADD_USER = "http://192.168.1.172:5000/users";
-        public const string USER_EXISTING = "http://192.168.1.172:5000/users/{0}";
+        public const string ADD_ADVERTISEMENT = BASE_URL + "/advertisements";
+        public const string ADVERTISEMENT_SEARCH = BASE_URL + "/advertisements?&lat={0}&lng={1}&distance={2}";
+        public const string ADVERTISEMENT_SEARCH_BY_USER = BASE_URL + "/advertisements/{0}";
+
+        public const string ADD_USER = BASE_URL + "/users";
+        public const string USER_EXISTING = BASE_URL + "/users/{0}";
+        public const string USER_PROFILE = BASE_URL + "/users/{0}";
     }
 }

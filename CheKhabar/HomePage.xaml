@@ -8,10 +8,13 @@
                      IconImageSource="add.png"
                      Clicked="ToolbarItem_Clicked"/>
     </TabbedPage.ToolbarItems>
-    <local:HistoryPage Title="History"
-                       IconImageSource="home.png"/>
+
     <local:MapPage Title="Map"
                    IconImageSource="map.png"/>
+    
+    <local:HistoryPage Title="History"
+                       IconImageSource="home.png"/>
+
     <local:ProfilePage Title="Profile"
                        IconImageSource="user.png"/>
 </TabbedPage>

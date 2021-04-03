@@ -2,27 +2,36 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CheKhabar.ProfilePage">
-    <ContentPage.Content>
-        <StackLayout Margin="20,40,20,0">
-            <Label x:Name="postCountLabel" 
-                   HorizontalOptions="Center" 
-                   Text="--"
-                   TextColor="DodgerBlue"
-                   FontAttributes="Bold"/>
-
-            <Label Text="posts"
-                   HorizontalOptions="Center"
-                   TextColor="LightGray"/>
-
-            <ListView x:Name="categoriesListView">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextCell Text="{Binding Path=Key}"
-                                  Detail="{Binding Path=Value}"/>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-                
-            </ListView>
-        </StackLayout>
-    </ContentPage.Content>
+        <StackLayout>
+            <Entry x:Name="firstNameEntry" 
+                   Placeholder="First Name"
+                   TextColor="{StaticResource blueColor}"/>
+            <Entry x:Name="lastNameEntry" 
+                   Placeholder="Last Name"
+                   TextColor="{StaticResource blueColor}"/>
+            <!--<Entry x:Name="nickNameEntry" 
+                   Placeholder="Nick Name"
+                   TextColor="{StaticResource blueColor}"/>-->
+            <Entry x:Name="emailEntry" 
+                   Placeholder="Email address"
+                   TextColor="{StaticResource blueColor}"
+                   Keyboard="Email"/>
+            <Entry x:Name="mobileEntry" 
+                   Placeholder="Mobile Number"
+                   TextColor="{StaticResource blueColor}" 
+                   IsEnabled="False" 
+                   IsReadOnly="True"/>
+            <Entry x:Name="activeEntry" 
+                   Placeholder="Active"
+                   TextColor="{StaticResource blueColor}" />
+        <Entry x:Name="scoreEntry" 
+                   Placeholder="Score"
+                   TextColor="{StaticResource blueColor}" />
+        <Entry x:Name="visibleEntry" 
+                   Placeholder="Visible"
+                   TextColor="{StaticResource blueColor}" />
+        <Entry x:Name="distanceEntry" 
+                   Placeholder="Distance"
+                   TextColor="{StaticResource blueColor}" />
+    </StackLayout>
 </ContentPage>

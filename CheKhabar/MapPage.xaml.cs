@@ -3,10 +3,12 @@ using CheKhabar.Model;
 using Plugin.Geolocator;
 using Plugin.Geolocator.Abstractions;
 using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
 using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,7 +22,7 @@ namespace CheKhabar
     {
         private bool hasLocationPermission = false;
 
-        Position currentPosition = null;
+        Position currentPosition;
         public MapPage()
         {
             InitializeComponent();
@@ -70,7 +72,7 @@ namespace CheKhabar
         {
             base.OnAppearing();
 
-            if(hasLocationPermission)
+            if (hasLocationPermission)
             {
                 var locator = CrossGeolocator.Current;
 
@@ -79,14 +81,10 @@ namespace CheKhabar
             }
 
             GetLocation();
-
-            var advertisements = await AdvertisementLogic.GetAdvertisements(currentPosition.Latitude, currentPosition.Longitude);
-            DisplayInMap(advertisements);
         }
 
         private void DisplayInMap(List<Advertisement> advertisements)
         {
-            
             foreach (var adv in advertisements)
             {
                 try
@@ -98,7 +96,8 @@ namespace CheKhabar
                         Type = Xamarin.Forms.Maps.PinType.SavedPin,
                         Position = position,
                         Label = adv.description,
-                        Address = adv.distance.ToString()
+                        Address = adv.distance.ToString() + " m"
+
                     };
 
                     locationMap.Pins.Add(pin);
@@ -123,22 +122,52 @@ namespace CheKhabar
             CrossGeolocator.Current.PositionChanged -= Locator_PositionChanged;
         }
 
-        private void Locator_PositionChanged(object sender, PositionEventArgs e)
+        private async void Locator_PositionChanged(object sender, PositionEventArgs e)
         {
             MoveMap(e.Position);
+            var advertisements = await AdvertisementLogic.GetAdvertisements(currentPosition.Latitude, currentPosition.Longitude);
+            DisplayInMap(advertisements);
         }
 
         private async void GetLocation()
         {
-            if (hasLocationPermission)
+            try
             {
+                //var hasPermission = await Utils.CheckPermissions(Permission.Location);
+                if (!hasLocationPermission)
+                    return;
+
                 var locator = CrossGeolocator.Current;
-                var position = await locator.GetPositionAsync();
+                //locator.DesiredAccuracy = DesiredAccuracy.Value;
 
-                currentPosition = position;
+                //var position = await locator.GetPositionAsync(TimeSpan.FromSeconds(Timeout.Value), null, IncludeHeading.IsToggled);
+                currentPosition = await locator.GetPositionAsync();
 
-                MoveMap(position); 
+                if (currentPosition == null)
+                {
+                    await DisplayAlert("Uh oh", "Something went wrong, but don't worry we captured for analysis! Thanks.", "OK");
+                    return;
+                }
             }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Uh oh", "Something went wrong, but don't worry we captured for analysis! Thanks.", "OK");
+                return;
+            }
+            //finally
+            //{
+            //    ButtonGetGPS.IsEnabled = true;
+            //}
+
+            //if (hasLocationPermission)
+            //{
+            //    var locator = CrossGeolocator.Current;
+            //    var position = await locator.GetPositionAsync();
+
+            //    currentPosition = position;
+
+                MoveMap(currentPosition ); 
+            //}
         }
 
         private void MoveMap(Position position)
@@ -146,6 +175,11 @@ namespace CheKhabar
             var center = new Xamarin.Forms.Maps.Position(position.Latitude, position.Longitude);
             var span = new Xamarin.Forms.Maps.MapSpan(center, 1, 1);
             locationMap.MoveToRegion(span);
+        }
+
+        private void OnMapClicked(object sender, Xamarin.Forms.Maps.MapClickedEventArgs e)
+        {
+            Navigation.PushAsync(new AddAdvertisementPage(e.Position));
         }
     }
 }

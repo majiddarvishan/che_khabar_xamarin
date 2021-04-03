@@ -4,7 +4,15 @@
              x:Class="CheKhabar.PostDetailPage">
 
     <StackLayout>
-        <Entry x:Name="experiencedEntry"/>
+        <Entry x:Name="descriptionEntry"
+               Placeholder="Description"
+               TextColor="{StaticResource blueColor}"/>
+        <Entry x:Name="startTimeEntry" 
+               Placeholder="Start Time"
+               TextColor="{StaticResource blueColor}"/>
+        <Entry x:Name="stopTimeEntry" 
+               Placeholder="Stop Time"
+               TextColor="{StaticResource blueColor}"/>
         <Button x:Name="updateButton"
                 Text="Update"
                 Clicked="updateButton_Clicked"/>

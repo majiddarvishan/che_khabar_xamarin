@@ -14,23 +14,27 @@ namespace CheKhabar
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PostDetailPage : ContentPage
     {
-        Post selectedPost;
-        public PostDetailPage(Post selectedPost)
+        Advertisement selectedAdvertisement;
+        public PostDetailPage(Advertisement selectedAdv)
         {
             InitializeComponent();
 
-            this.selectedPost = selectedPost;
-            experiencedEntry.Text = selectedPost.Experience;
+            this.selectedAdvertisement = selectedAdv;
+            descriptionEntry.Text = selectedAdvertisement.description;
+            startTimeEntry.Text = selectedAdvertisement.start_time;
+            stopTimeEntry.Text = selectedAdvertisement.end_time;
         }
 
         private void updateButton_Clicked(object sender, EventArgs e)
         {
-            selectedPost.Experience = experiencedEntry.Text;
+            selectedAdvertisement.description = descriptionEntry.Text;
+            selectedAdvertisement.start_time = startTimeEntry.Text;
+            selectedAdvertisement.end_time = stopTimeEntry.Text;
 
             using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
             {
-                conn.CreateTable<Post>();
-                int rows = conn.Update(selectedPost);
+                conn.CreateTable<Advertisement>();
+                int rows = conn.Update(selectedAdvertisement);
 
                 if (rows > 0)
                 {
@@ -40,6 +44,8 @@ namespace CheKhabar
                 {
                     DisplayAlert("Failure", "Experience failed to be updated", "OK");
                 }
+
+                //TODO:Majid Darvishan: must be update in web server too
             }
         }
 
@@ -47,16 +53,16 @@ namespace CheKhabar
         {
             using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
             {
-                conn.CreateTable<Post>();
-                int rows = conn.Delete(selectedPost);
+                conn.CreateTable<Advertisement>();
+                int rows = conn.Delete(selectedAdvertisement);
 
                 if (rows > 0)
                 {
-                    DisplayAlert("Success", "Experience successfully deleted", "OK");
+                    DisplayAlert("Success", "Advertisement successfully deleted", "OK");
                 }
                 else
                 {
-                    DisplayAlert("Failure", "Experience failed to be deleted", "OK");
+                    DisplayAlert("Failure", "Advertisement failed to be deleted", "OK");
                 }
             }
         }
