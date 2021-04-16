@@ -49,5 +49,10 @@ namespace CheKhabar
             mobileEntry.Text = user.mobile;
             distanceEntry.Text = user.distance.ToString();
         }
+
+        private void userTypeSwitch_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            userTypeLabel.Text = sender.ToString();
+        }
     }
 }
