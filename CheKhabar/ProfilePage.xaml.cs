@@ -48,6 +48,30 @@ namespace CheKhabar
             emailEntry.Text = user.email;
             mobileEntry.Text = user.mobile;
             distanceEntry.Text = user.distance.ToString();
+            activeSwitch.IsToggled = user.active;
+            visibleSwitch.IsToggled = user.visible;
+
+            scoreLabel.Text = $"Score: {user.score.ToString()}";
+
+            userTypeSwitch.IsToggled = user.user_mode == UserMode.Advertiser ? true : false;
+            string stateName = user.user_mode == UserMode.Advertiser ? "Advertiser" : "Common";
+            userTypeLabel.Text = $"The user type is {stateName}";
+        }
+
+        private void userTypeSwitch_Toggled(object sender, ToggledEventArgs e)
+        {
+            string stateName = e.Value ? "Advertiser" : "Common";
+            userTypeLabel.Text = $"The user type is {stateName}";
+        }
+
+        private void visibleSwitch_Toggled(object sender, ToggledEventArgs e)
+        {
+
+        }
+
+        private void activeSwitch_Toggled(object sender, ToggledEventArgs e)
+        {
+
         }
     }
 }

@@ -21,17 +21,86 @@
                    TextColor="{StaticResource blueColor}" 
                    IsEnabled="False" 
                    IsReadOnly="True"/>
-            <Entry x:Name="activeEntry" 
-                   Placeholder="Active"
+
+            <Label x:Name="scoreLabel" 
                    TextColor="{StaticResource blueColor}" />
-        <Entry x:Name="scoreEntry" 
-                   Placeholder="Score"
-                   TextColor="{StaticResource blueColor}" />
-        <Entry x:Name="visibleEntry" 
-                   Placeholder="Visible"
-                   TextColor="{StaticResource blueColor}" />
-        <Entry x:Name="distanceEntry" 
+
+            <Entry x:Name="distanceEntry" 
                    Placeholder="Distance"
                    TextColor="{StaticResource blueColor}" />
+
+        <Grid Margin="20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.75*" />
+                <ColumnDefinition Width="0.25*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Label x:Name="userTypeLabel" 
+                   Grid.Row="0"
+                   Text="Common User"
+                   VerticalOptions="Center" />
+            <Switch x:Name="userTypeSwitch"
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    HorizontalOptions="End" 
+                    Toggled="userTypeSwitch_Toggled"/>
+            <Label x:Name="visibleLabel"
+                   Grid.Row="1"
+                   Text="Visible"
+                   VerticalOptions="Center" />
+            <Switch x:Name="visibleSwitch"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    HorizontalOptions="End"
+                    Toggled="visibleSwitch_Toggled">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="On">
+                            <VisualState.Setters>
+                                <Setter Property="ThumbColor"
+                                    Value="MediumSpringGreen" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Off">
+                            <VisualState.Setters>
+                                <Setter Property="ThumbColor"
+                                    Value="Red" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+            </Switch>
+
+            <Label x:Name="activeLabel" 
+                   Grid.Row="2"
+                   Text="Active"
+                   VerticalOptions="Center" />
+            <Switch x:Name="activeSwitch" 
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    HorizontalOptions="End"
+                    Toggled="activeSwitch_Toggled">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CommonStates2">
+                        <VisualState x:Name="On2">
+                            <VisualState.Setters>
+                                <Setter Property="ThumbColor"
+                                    Value="MediumSpringGreen" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Off2">
+                            <VisualState.Setters>
+                                <Setter Property="ThumbColor"
+                                    Value="Red" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+            </Switch>
+        </Grid>
     </StackLayout>
 </ContentPage>
