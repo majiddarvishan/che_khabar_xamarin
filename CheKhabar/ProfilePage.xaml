@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CheKhabar.ProfilePage">
-        <StackLayout>
+    <StackLayout>
+        <StackLayout Margin="20">
             <Entry x:Name="firstNameEntry" 
                    Placeholder="First Name"
                    TextColor="{StaticResource blueColor}"/>
@@ -24,11 +25,7 @@
 
             <Label x:Name="scoreLabel" 
                    TextColor="{StaticResource blueColor}" />
-
-            <Entry x:Name="distanceEntry" 
-                   Placeholder="Distance"
-                   TextColor="{StaticResource blueColor}" />
-
+        </StackLayout>
         <Grid Margin="20">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.75*" />
@@ -102,5 +99,27 @@
                 </VisualStateManager.VisualStateGroups>
             </Switch>
         </Grid>
+
+        <StackLayout Margin="20">
+            <Slider x:Name="radiusSlider"
+                    Maximum="2000"
+                    Minimum="100"
+                    ThumbColor="Blue"
+                    MaximumTrackColor="Red"
+                    MinimumTrackColor="Green"
+                    ValueChanged="radiusSlider_ValueChanged" />
+
+            <Label x:Name="radiusLabel"
+                   Text="0"
+                   Margin="10"
+                   HorizontalOptions="Center"
+                   VerticalOptions="CenterAndExpand" />
+        </StackLayout>
+
+        <Button x:Name="updateButton" 
+                Margin="0,5,0,0"
+                Text="Update" 
+                Clicked="updateButton_Clicked"
+                Style="{StaticResource normalButton}"/>
     </StackLayout>
 </ContentPage>

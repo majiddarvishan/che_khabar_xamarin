@@ -47,7 +47,6 @@ namespace CheKhabar
             lastNameEntry.Text = user.last_name;
             emailEntry.Text = user.email;
             mobileEntry.Text = user.mobile;
-            distanceEntry.Text = user.distance.ToString();
             activeSwitch.IsToggled = user.active;
             visibleSwitch.IsToggled = user.visible;
 
@@ -56,6 +55,9 @@ namespace CheKhabar
             userTypeSwitch.IsToggled = user.user_mode == UserMode.Advertiser ? true : false;
             string stateName = user.user_mode == UserMode.Advertiser ? "Advertiser" : "Common";
             userTypeLabel.Text = $"The user type is {stateName}";
+
+            radiusSlider.Value = user.distance;
+            radiusLabel.Text = String.Format("Radius is {0}", user.distance);
         }
 
         private void userTypeSwitch_Toggled(object sender, ToggledEventArgs e)
@@ -70,6 +72,19 @@ namespace CheKhabar
         }
 
         private void activeSwitch_Toggled(object sender, ToggledEventArgs e)
+        {
+
+        }
+
+        private void radiusSlider_ValueChanged(object sender, ValueChangedEventArgs e)
+        {
+            var newStep = Math.Round(e.NewValue);
+            radiusSlider.Value = newStep;
+
+            radiusLabel.Text = String.Format("Radius is {0}", e.NewValue);
+        }
+
+        private void updateButton_Clicked(object sender, EventArgs e)
         {
 
         }
