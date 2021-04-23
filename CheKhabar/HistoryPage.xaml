@@ -1,12 +1,81 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:local="clr-namespace:CheKhabar"
              x:Class="CheKhabar.HistoryPage">
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:GregorianToSolarConverter x:Key="gregorianToSolar" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
     <ListView x:Name="postListView"
-              ItemSelected="postListView_ItemSelected">
+              ItemSelected="postListView_ItemSelected"
+              Margin="20,0"
+              VerticalOptions="FillAndExpand"
+              HorizontalOptions="FillAndExpand">
+        <ListView.Header>
+                <Grid HeightRequest="5"
+                      HorizontalOptions="FillAndExpand"
+                      BackgroundColor="#cccccc">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" 
+                           Text="زمان پایان"
+                           VerticalOptions="Center"
+                           Margin="20,0"/>
+                    <Label Grid.Column="1" 
+                           Text="زمان شروع"
+                           VerticalOptions="Center"
+                           Margin="20,0"/>
+                    <Label Grid.Column="2" 
+                           Text="توضیحات"
+                           VerticalOptions="Center"
+                           Margin="20,0"/>
+                </Grid>
+        </ListView.Header>
         <ListView.ItemTemplate>
             <DataTemplate>
-                <TextCell Text="{Binding description}"/>
+                <!--<TextCell Text="{Binding description}"/>-->
+                <ViewCell>
+                    <Frame BackgroundColor="White"
+                           BorderColor="#F0F0F0"
+                           Padding="5"
+                           Margin="0,0,0,5"
+                           HasShadow="False">
+                        <Grid HeightRequest="70"
+                              HorizontalOptions="FillAndExpand"
+                              VerticalOptions="Start">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0"
+                                   Text="{Binding end_time, Converter={StaticResource gregorianToSolar}}" 
+                                   TextColor="#757575"
+                                   FontSize="12"
+                                   VerticalOptions="Center"
+                                   Margin="20,0"/>
+                            <Label Grid.Column="1"
+                                   Text="{Binding start_time, Converter={StaticResource gregorianToSolar}}" 
+                                   TextColor="#757575"
+                                   FontSize="12"
+                                   VerticalOptions="Center"
+                                   Margin="20,0"/>
+                            <Label Grid.Column="2"
+                                   Text="{Binding description}" 
+                                   TextColor="#757575"
+                                   FontSize="12"
+                                   VerticalOptions="Center"
+                                   Margin="20,0"/>
+                        </Grid>
+                    </Frame>
+                </ViewCell>
             </DataTemplate>
         </ListView.ItemTemplate>
     </ListView>
